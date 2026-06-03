@@ -9,7 +9,7 @@ import "dotenv/config"
 const client = new MongoClient(process.env.MONGODB_ATLAS_URI as string)
 
 const llm = new ChatGoogleGenerativeAI({
-    model: "gemini-1.5-flash",
+    model: "gemini-2.5-flash",
     temperature: 0.7,
     apiKey: process.env.GOOGLE_API_KEY,
 })
@@ -167,5 +167,9 @@ async function seedDatabase(): Promise<void> {
 
     } catch (error) {
         console.error('Error seeding database:', error)
+} finally {
+        await client.close()
     }
 }
+
+seedDatabase().catch(console.error)
